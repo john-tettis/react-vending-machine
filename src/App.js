@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+import React from 'react'
+import {BrowserRouter, Route, Link} from 'react-router-dom'
+import VendingMachine from './VendingMachine'
+import Item from './Item'
+import NavBar from './Navbar'
 import './App.css';
+import {list} from './ItemsList'
+console.log(list)
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+      <NavBar items={list}/>
+        <Route exact path='/'>
+          <VendingMachine items={list}/>
+        </Route>
+        {list.map(i=>(
+          <Route key={i.name} exact path={i.url}>
+            <Item item={i}/>
+          </Route>
+        ))}
+      </BrowserRouter>
+      
+    </>
   );
 }
 
